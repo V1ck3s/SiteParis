@@ -1,0 +1,27 @@
+Pour mettre à jour les paris, executez la première requête (problème quand il y a plus d'un paris d'une personne, seul le premier compte)
+
+
+UPDATE event INNER JOIN paris 
+ON event.optionGagnant = paris.optionChoisis
+INNER JOIN utilisateur
+ON paris.loginJoueur = utilisateur.login
+SET paris.argentRecup = 1, utilisateur.argent = (utilisateur.argent+paris.gainRecupere)
+WHERE event.id = paris.idEvent
+AND event.optionGagnant = paris.optionChoisis
+AND paris.argentRecup = 0
+
+SELECT *
+FROM event INNER JOIN paris 
+ON event.optionGagnant = paris.optionChoisis 
+INNER JOIN utilisateur
+ON paris.loginJoueur = utilisateur.login
+
+
+SELECT *
+FROM event INNER JOIN paris 
+ON event.optionGagnant = paris.optionChoisis 
+INNER JOIN utilisateur
+ON paris.loginJoueur = utilisateur.login
+WHERE event.id = paris.idEvent
+AND event.optionGagnant = paris.optionChoisis
+AND paris.argentRecup = 0
