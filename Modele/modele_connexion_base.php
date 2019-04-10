@@ -12,13 +12,13 @@
 				try{
 					$serveur='mysql:host=localhost';
 					$bdd='dbname=paris';
-					$user='vic1997';
-					$mdp='vic1997_pswd';
+					$user='root';
+					$mdp='';
 					Connexion::$monPdo = new PDO($serveur.';'.$bdd, $user,$mdp);
 					Connexion::$monPdo->query("SET CHARACTER SET utf8");
                     
 				}catch (PDOException $e){
-					throw new Exception("Erreur à la connexion \n" . $e->getMessage());
+					throw new Exception("Erreur ï¿½ la connexion \n" . $e->getMessage());
                     
                     
 				}

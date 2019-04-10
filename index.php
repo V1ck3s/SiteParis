@@ -12,11 +12,11 @@
 
 <html>
 <style> 
-body {
-    color: red;
-}
+
 </style>
 	<body class="is-loading">
+
+
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -24,7 +24,8 @@ body {
 				<!-- Main -->
 					<section id="main">
 						
-							
+					
+					
 					<?php
 						if(isset($_SESSION['login']))
 						{
