@@ -17,4 +17,5 @@
 		}
    	}
 	include("../Vue/vue_moncompte.php");
+	include('../newStyle.css');
 ?>	

@@ -30,6 +30,7 @@
 		else
 		{
 			include("../Vue/vue_paris.php");
+			include('../newStyle.css');
 		}
 	}
 	else{

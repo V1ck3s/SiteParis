@@ -1,35 +1,5 @@
 ﻿<style>
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid #e7e7e7;
-    background-color: #f3f3f3;
-	
-}
 
-li {
-    float: left;
-	border-right: none;
-}
-
-li a {
-    display: block;
-    color: #666;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover:not(.active) {
-    background-color: #ddd;
-}
-
-li a.active {
-    color: white;
-    background-color: #4CAF50;
-}
 
 table{
 	border: medium solid #6495ed;
@@ -136,15 +106,7 @@ $(function()
 					<section id="main">
 						
 							
-					 <ul>
-
-
-						  <li><a href="../index.php">Accueil</a></li>
-						  <li><a href="../Controleur/ctrl_moncompte.php">Mon Compte</a></li>
-						  <li><a href="../Controleur/ctrl_paris.php">Paris</a></li>
-						  <li><a href="../Controleur/ctrl_classement.php">Classement</a></li>
-						  <li><a href="../Controleur/ctrl_deconnexion.php">Déconnexion</a></li>
-						</ul>
+					
 
 						</br>
 						</br>

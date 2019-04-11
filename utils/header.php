@@ -12,6 +12,9 @@
 ?>
 
 <html>
+<?php 
+			include('../navBar.php');
+		?>
 	<head>
 		<title>Site de paris</title>
 		<meta charset="utf-8" />

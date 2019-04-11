@@ -6,4 +6,6 @@
 	include("../utils/header.php");
 	$lesClassements=$r->readAll();
 	include("../Vue/vue_classement.php");
+
+	include('../newStyle.css');
 ?>	
