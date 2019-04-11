@@ -11,19 +11,24 @@
 			//on récupère, via la méthode "post" les données envoyées
 			$login= $_POST['conn_login'];//identifiant de connexion
 			//$pass=md5($_POST['conn_pass']);//mot de passe de connexion
-			$pass=password_hash($_POST['conn_pass'], PASSWORD_DEFAULT);
+	
 			//requete SQL récupérant toutes les informations sur l'utilisateur
-			$reqSQL="SELECT * FROM utilisateur WHERE login=:login AND mdp=:pass";
+			//$reqSQL="SELECT * FROM utilisateur WHERE login=:login AND mdp=:pass";
+			$reqSQL="SELECT * FROM utilisateur WHERE login=:login";
 			$unLogin = $this->cx->prepare($reqSQL);
 			
 			//j'associe les paramètres	
 			$unLogin->bindValue(":login",$login,PDO::PARAM_STR);
-			$unLogin->bindValue(":pass",$pass,PDO::PARAM_STR);	
+			//$unLogin->bindValue(":pass",$pass,PDO::PARAM_STR);	
 			$unLogin->execute();
+			
 			//on stock dans une variable de session le nombre de lignes que renvoie la requête
 			$existe = 0;
 			if($uneLigne=$unLogin->fetch(PDO::FETCH_OBJ))
 			{
+				
+			
+				password_verify($_POST['conn_pass'], $uneLigne->mdp);
 				$existe=1;
 			}
 			return $existe;
@@ -37,17 +42,24 @@
 			//$pass=md5($_POST['conn_pass']);//mot de passe de connexion
 			$pass=password_hash($_POST['conn_pass'], PASSWORD_DEFAULT);
 			//requete SQL récupérant toutes les informations sur l'utilisateur
-			$reqSQL="SELECT * FROM utilisateur WHERE login=:login AND mdp=:pass";
+			//$reqSQL="SELECT * FROM utilisateur WHERE login=:login AND mdp=:pass";
+			$reqSQL="SELECT * FROM utilisateur WHERE login=:login";
 			$unLogin = $this->cx->prepare($reqSQL);
 			
 			//j'associe les paramètres	
 			$unLogin->bindValue(":login",$login,PDO::PARAM_STR);
-			$unLogin->bindValue(":pass",$pass,PDO::PARAM_STR);	
+			//$unLogin->bindValue(":pass",$pass,PDO::PARAM_STR);	
 			$unLogin->execute();
 			//on stock dans une variable de session le nombre de lignes que renvoie la requête
 			$nbLigne=0;
+			$reussi=0;
 			if($uneLigne=$unLogin->fetch(PDO::FETCH_OBJ)){
-				$nbLigne=1;
+				if(password_verify($_POST['conn_pass'], $uneLigne->mdp)){
+					$nbLigne=1;
+					
+				}
+				
+				
 			}
 			$_SESSION['userLog']=$nbLigne;
 			
@@ -56,6 +68,9 @@
 				$_SESSION['login']=$uneLigne->login; //on stock l'identifiant dans une variable de session (C'EST CETTE VARIABLE QUI, SI ELLE EST NON VIDE, SIGNIFIE QUE L'ON EST CONNECTE)
 				$_SESSION['idUtil']=$uneLigne->idUtil;
 				
+				header("Location:../index.php");
+			}
+			else{ // mauvais mdp
 				header("Location:../index.php");
 			}
 		}
