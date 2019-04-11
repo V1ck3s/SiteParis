@@ -13,7 +13,11 @@
 
 <html>
 <?php 
+		if(basename($_SERVER["SCRIPT_FILENAME"], '.php') != "index"){
 			include('../navBar.php');
+		}
+		
+	
 		?>
 	<head>
 		<title>Site de paris</title>

@@ -1,6 +1,6 @@
 ﻿<style>
 
-
+/*
 table{
 	border: medium solid #6495ed;
 	border-collapse: collapse;
@@ -18,7 +18,7 @@ th {
 	border: thin solid #6495ed;
 	padding: 15px;
 	background-color: #6d6d6d;
-}
+}*/
 
 </style>
 
@@ -36,11 +36,12 @@ th {
 					
 
 						</br>
+						
+						<center><h1>Classement :</h1></center>
+					</br>
 						</br>
-						</br>
-
 						<p>
-							<table border="10" cellpadding="15" width="100%"><tr height="70"><th>Login</th><th>Argent</th></tr>
+							<table class="table-striped table-dark" cellpadding="15" width="100%"><tr height="70"><th>Login</th><th>Argent</th></tr>
 							<?php
 								while($unClassement=$lesClassements->fetch(PDO::FETCH_OBJ))
 								{

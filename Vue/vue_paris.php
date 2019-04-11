@@ -1,7 +1,7 @@
 ﻿<style>
 
 
-table{
+/*table{
 	border: medium solid #6495ed;
 	border-collapse: collapse;
 	
@@ -17,7 +17,7 @@ th {
 	line-height: 26.4px;
 	border: thin solid #6495ed;
 	padding: 15px;
-	background-color: #6d6d6d;
+	background-color: #6d6d6d;*/
 }
 
 .paris-case.active
@@ -108,13 +108,14 @@ $(function()
 							
 					
 
-						</br>
-						</br>
-						</br>
+						
+						
 
 						<p>
-							Événements à venir :
-							<table border="10" cellpadding="15" width="100%"><tr height="70"><th>1</th><th>N</th><th>2</th><th>Date</th></tr>
+							<center><h1>Événements à venir :</h1></center>
+							<br>
+						</br>
+							<table class="table-striped table-dark" cellpadding="15" width="100%"><tr height="70"><th>1</th><th>N</th><th>2</th><th>Date</th></tr>
 							<?php
 								while($unParis=$lesParis->fetch(PDO::FETCH_OBJ))
 								{
@@ -135,19 +136,23 @@ $(function()
 						</p>
 						</br>
 						<p>
-							Votre mise : <input type="number" id="someid" onchange="test()" min="1" max="<?php echo $argentJoueur->argent; ?>"/> €
+							<center><h3>Votre mise :</h3> </center>
+							<div class="form-group">
+								<input class="form-control" type="number" id="someid" onchange="test()" min="1" max="<?php echo $argentJoueur->argent; ?>"/> €
+							</div>
 						</br>
-							Gain en cas de succès : <span id="gain">0</span> €
+							<center><h3>Gain en cas de succès : <span id="gain"><b>0</b></span> €</h3></center>
 						</p>
+									
+							<form class="form-signin" method="post" action="../Controleur/ctrl_paris.php">
+								<input type="hidden" id="paris-option" name="paris-option">
+								<input type="hidden" id="paris-mise" name="paris-mise">
+								<input type="hidden" id="paris-cote" name="paris-cote">
+								<input type="hidden" id="paris-event" name="paris-event">
 
-						<form method="post" action="../Controleur/ctrl_paris.php">
-							<input type="hidden" id="paris-option" name="paris-option">
-							<input type="hidden" id="paris-mise" name="paris-mise">
-							<input type="hidden" id="paris-cote" name="paris-cote">
-							<input type="hidden" id="paris-event" name="paris-event">
-
-							<button type="submit">Parier</button>
-						</form>
+								<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Parier</button>
+							</form>
+						
 
 							
 						

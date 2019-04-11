@@ -1,5 +1,5 @@
 ﻿<style>
-table{
+/*table{
 	border: medium solid #6495ed;
 	border-collapse: collapse;
 	
@@ -16,6 +16,11 @@ th {
 	border: thin solid #6495ed;
 	padding: 15px;
 	background-color: #6d6d6d;
+}*/
+
+table{
+	
+	
 }
 </style>
 
@@ -33,14 +38,16 @@ th {
 					
 
 						</br>
-						</br>
-						</br>
+						
 					<!--	<form method="post" action="../Controleur/ctrl_moncompte.php">
 							<button type="submit">Actualiser mes gains</button>
 						</form>
 						--><p>
 							<center>
-							<table>
+							<h1>Mon compte :</h1>
+						</br>
+						</br>
+							<table class="table-striped table-dark" cellpadding="15px">
 							<tr>
 							<?php
 								echo "<th>Login : ".$leCompte->login."</br></th></tr>";
@@ -50,8 +57,11 @@ th {
 							</table>
 
 							</br>
-								Mes paris en cours :
-								<table border="10" cellpadding="15" width="100%"><tr height="70"><th>Parié sur</th><th>Pour le match du</th><th>Mise</th><th>Gain</th><th>Gagné/Perdu</th></tr>
+</br>
+								<h2>Mes paris en cours :</h2>
+							</br>
+</br>
+								<table class="table-striped table-dark" cellpadding="15" width="100%"><tr height="70"><th>Parié sur</th><th>Pour le match du</th><th>Mise</th><th>Gain</th><th>Gagné/Perdu</th></tr>
 								<?php
 
 									while($unCompte=$lesComptes->fetch(PDO::FETCH_OBJ))

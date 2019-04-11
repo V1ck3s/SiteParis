@@ -1,4 +1,5 @@
 ﻿<style>
+/*
 table{
 	border: medium solid #6495ed;
 	border-collapse: collapse;
@@ -16,7 +17,7 @@ th {
 	border: thin solid #6495ed;
 	padding: 15px;
 	background-color: #6d6d6d;
-}
+}*/
 </style>
 
 
@@ -33,9 +34,10 @@ th {
 			
 				<!-- Main -->
 				<section id="main">
-					
+					<br>
+				<center><h1>Nouveautés :</h1></center>
 					</br>
-					<table border="10" cellpadding="15" width="100%">
+					<table class="table table-striped table-dark">
 					<?php
 						while($uneNews=$lesNews->fetch(PDO::FETCH_OBJ))
 						{
