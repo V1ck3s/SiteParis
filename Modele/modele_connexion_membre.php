@@ -10,7 +10,8 @@
 		{	
 			//on récupère, via la méthode "post" les données envoyées
 			$login= $_POST['conn_login'];//identifiant de connexion
-			$pass=md5($_POST['conn_pass']);//mot de passe de connexion
+			//$pass=md5($_POST['conn_pass']);//mot de passe de connexion
+			$pass=password_hash($_POST['conn_pass'], PASSWORD_DEFAULT);
 			//requete SQL récupérant toutes les informations sur l'utilisateur
 			$reqSQL="SELECT * FROM utilisateur WHERE login=:login AND mdp=:pass";
 			$unLogin = $this->cx->prepare($reqSQL);
@@ -33,7 +34,8 @@
 		{
 			//on récupère, via la méthode "post" les données envoyées
 			$login= $_POST['conn_login'];//identifiant de connexion
-			$pass=md5($_POST['conn_pass']);//mot de passe de connexion
+			//$pass=md5($_POST['conn_pass']);//mot de passe de connexion
+			$pass=password_hash($_POST['conn_pass'], PASSWORD_DEFAULT);
 			//requete SQL récupérant toutes les informations sur l'utilisateur
 			$reqSQL="SELECT * FROM utilisateur WHERE login=:login AND mdp=:pass";
 			$unLogin = $this->cx->prepare($reqSQL);
