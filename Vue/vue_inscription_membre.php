@@ -125,8 +125,8 @@ body {
 			  <span class="avatar"><img src="http://fr.bar-sports.com/forum-sport/uploads/set_resources_2/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png" alt="" width="200px" /></span>
 			</center>
 			<br>
-			<h5 class="card-title text-center">Se connecter</h5>
-            <form class="form-signin" name="inscription" action="/Controleur/ctrl_connexion_membre.php?mem=true" method="POST">
+			<h5 class="card-title text-center">S'inscrire</h5>
+            <form class="form-signin" name="inscription" action="/Controleur/ctrl_inscription_membre.php?mem=true" method="POST">
               <div class="form-label-group">
                 <input type="text" name="conn_login" id="conn_login" class="form-control" placeholder="Email address" required autofocus>
                 <label for="conn_login">Login</label>
@@ -142,11 +142,9 @@ body {
                 <label class="custom-control-label" for="customCheck1">Retenir mot de passe</label>
                 
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="envoyer">Se connecter</button>
-
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="envoyer">S'inscrire</button>
               <hr class="my-4">
-              <button onclick="location.href = 'Controleur/ctrl_inscription_membre.php';" class="btn btn-lg btn-danger btn-block text-uppercase" id="inscription">S'inscrire</button>
-              
+              <button onclick="location.href = '../index.php';" class="btn btn-lg btn-danger btn-block text-uppercase" id="connexion">Se connecter</button>
               
             </form>
           </div>
