@@ -11,7 +11,7 @@
 			if( Connexion :: $monPdo == null){
 				try{
 					$serveur='mysql:host=localhost';
-					$bdd='dbname=paris';
+					$bdd='dbname=site_paris_vic';
 					$user='root';
 					$mdp='';
 					Connexion::$monPdo = new PDO($serveur.';'.$bdd, $user,$mdp);

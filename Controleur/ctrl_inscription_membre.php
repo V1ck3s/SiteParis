@@ -26,6 +26,6 @@
 	else
 	{
 		include("../Vue/vue_inscription_membre.php");
-		include('../newStyle.css');
+		include('../newStyle.css.php');
 	}
 ?>

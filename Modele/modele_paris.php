@@ -1,6 +1,5 @@
 <?php
-
-	class News{
+	class Paris{
 		//attribut privé qui recevra une instance de la connexion
 		private $cx;
 		
@@ -12,25 +11,46 @@
 		//Retourne un curseur contenant toutes les recettes
 		public function readAll(){
 			$req = "SELECT *
-					FROM news 
-					ORDER BY id DESC";
+					FROM event
+					WHERE heureDebut >= NOW()
+					ORDER BY heureDebut ASC";
 			$curseur=$this->cx->query($req);
 			return $curseur;
 		}
 		
-		//retourne un curseur contenant l'objet associer à l'identifiant passé en paramètre
-		//on utilise ici la technique des requêtes préparées qui permettent d'éviter les injonctions SQL
-		public function findById($idNews){
+		public function argentJoueur($idJoueur){
 			//je reçois ma requête SQL
 			$req = "SELECT *
-					FROM news
+					FROM utilisateur
+					WHERE login = :id";
+			
+			//je prépare ma requête
+			$prep = $this->cx->prepare($req);
+			
+			//j'associe les paramètres
+			$prep->bindValue(':id', $idJoueur, PDO::PARAM_STR);
+			
+			//j'exécute
+			$prep->execute();
+			
+			//je remplis le curseur
+			$curseur = $prep->fetchObject();
+			return $curseur;
+		}
+
+		//retourne un curseur contenant l'objet associer à l'identifiant passé en paramètre
+		//on utilise ici la technique des requêtes préparées qui permettent d'éviter les injonctions SQL
+		public function findById($idParis){
+			//je reçois ma requête SQL
+			$req = "SELECT *
+					FROM utilisateur
 					WHERE id = :id";
 			
 			//je prépare ma requête
 			$prep = $this->cx->prepare($req);
 			
 			//j'associe les paramètres
-			$prep->bindValue(':id', $idNews, PDO::PARAM_STR);
+			$prep->bindValue(':id', $idParis, PDO::PARAM_STR);
 			
 			//j'exécute
 			$prep->execute();
@@ -40,56 +60,56 @@
 			return $curseur;
 		}
 		
-		/*public function create(){
+		public function creerParis(){
 			//Booléen permettant de vérifier l'éxécution de la requête
 			$valid=false;
 		  
 			//récupération des valeurs des champs:
-			$nom=$_POST['rec_nom'];
-			$descriptif=$_POST['rec_desc'];
-			$difficulte=$_POST['rec_dif'];
-			$prix=intval($_POST['rec_prix']);
-			$personnes=intval($_POST['rec_pers']);
-			$preparation=intval($_POST['rec_prep']);
-			$cuisson=intval($_POST['rec_cuis']);
-			$totale=$preparation+$cuisson;
-			$idUtil=intval($_SESSION['idUtil']);
+			$loginJoueur=$_SESSION['login'];
+			$idEvent=$_POST['paris-event'];
+			$optionChoisis=$_POST['paris-option'];
+			$gainRecupere=$_POST['paris-mise']*$_POST['paris-cote'];
+			$mise=$_POST['paris-mise'];
+			$cote=$_POST['paris-cote'];
+			
+
+
+			
 			//création de la requête SQL:
-			$sql="INSERT INTO recette(nom, descriptif, difficulte, prix, nbPersonnes, dureePreparation,
-				dureeCuisson, dureeTotale, qteCalories, qteProteines, qteGlucides, qteLipides, qteProtides, idUtil)
-				VALUES (:nom, :descriptif, :difficulte, :prix, :personnes, :preparation, :cuisson, :totale, 0, 0, 0, 0, 0, :idUtil)";
+			$sql="INSERT INTO paris(loginJoueur, idEvent, optionChoisis, gainRecupere, mise, cote)
+				VALUES (:loginJoueur, :idEvent, :optionChoisis, :gainRecupere, :mise, :cote)";
 				
 			$requete = $this->cx->prepare($sql);
 				
 			//J'associe les valeurs
-			$requete->bindValue(":nom",$nom,PDO::PARAM_STR);
-			$requete->bindValue(":descriptif",$descriptif,PDO::PARAM_STR);
-			$requete->bindValue(":difficulte",$difficulte,PDO::PARAM_STR);	
-			$requete->bindValue(":prix",$prix,PDO::PARAM_INT);	
-			$requete->bindValue(":personnes",$personnes,PDO::PARAM_INT);	
-			$requete->bindValue(":totale",$totale,PDO::PARAM_INT);			
-			$requete->bindValue(":cuisson",$cuisson,PDO::PARAM_INT);
-			$requete->bindValue(":preparation",$preparation,PDO::PARAM_INT);			
-			$requete->bindValue(":idUtil",$idUtil,PDO::PARAM_INT);	
+			$requete->bindValue(":loginJoueur",$loginJoueur,PDO::PARAM_STR);
+			$requete->bindValue(":idEvent",$idEvent,PDO::PARAM_INT);
+			$requete->bindValue(":optionChoisis",$optionChoisis,PDO::PARAM_STR);	
+			$requete->bindValue(":gainRecupere",$gainRecupere,PDO::PARAM_STR);	
+			$requete->bindValue(":mise",$mise,PDO::PARAM_STR);	
+			$requete->bindValue(":cote",$cote,PDO::PARAM_STR);			
+			
 			
 			//exécution de la requête SQL:
 			$requete->execute();
 			
 			//récupération de l'ID inséré			
-			$new_recette = $this->cx->lastInsertId();
+			//$new_recette = $this->cx->lastInsertId();
 			
 			//récupération des valeurs des champs:
-			$adresse=$_POST['rec_illu'];
+			$argentRetire=$_POST['paris-mise'];
 			
 			//création de la requête SQL:
-			$sql2="INSERT INTO illustration(adresse, idRec)
-				VALUES (:adresse, :new_recette)";
+			$sql2="UPDATE utilisateur
+				SET argent = argent-:argent
+				WHERE login = :loginJoueur";
 			
 			$requete2 = $this->cx->prepare($sql2);
 				
 			//J'associe les valeurs
-			$requete2->bindValue(":adresse",$adresse,PDO::PARAM_STR);
-			$requete2->bindValue(":new_recette",$new_recette,PDO::PARAM_INT);
+			$requete2->bindValue(":argent",$argentRetire,PDO::PARAM_STR);
+			$requete2->bindValue(":loginJoueur",$loginJoueur,PDO::PARAM_STR);
+			//$requete2->bindValue(":new_recette",$new_recette,PDO::PARAM_INT);
 			
 			//exécution de la requête SQL:
 			$requete2->execute();
@@ -98,6 +118,6 @@
 				$valid=true;
 			}
 			return $valid;
-		}*/
+		}
 	}
 ?>

@@ -7,5 +7,5 @@
 	$lesClassements=$r->readAll();
 	include("../Vue/vue_classement.php");
 
-	include('../newStyle.css');
+	include('../newStyle.css.php');
 ?>	
