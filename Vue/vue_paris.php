@@ -62,22 +62,32 @@
 				$("#gain").text(jGain.toFixed(2));
 			});
 
+			$("#button_bet").on("click", function(e)
+			{
+				event.preventDefault();
+				if($("#paris-option").val() != "" && $("#paris-mise").val() != "")
+				{
+					$("#form_submitBet").submit()
+				}
+			})
 
 		});
 	</script>
 
 	<script type="text/javascript">
 		var toto = new Array();
-			function myFunction(elmnt,clr, id, idOption, cote){
+		function myFunction(elmnt,clr, id, idOption, cote){
 			//alert('ID Match : '+id+'\nID de l\'équipe :'+idOption+'\nGain : '+document.getElementById('someid').value*cote);
 			var elem = document.getElementById('gain');
 			elem.innerHTML = document.getElementById('someid').value*cote;
 			elmnt.style.color = clr;
 		}
+		
 		function test(){
 			var elem = document.getElementById('gain');
-			elem.innerHTML = document.getElementById('someid').value*cote;
+			elem.innerHTML = document.getElementById('someid').value * $("#paris-cote").val();
 		}
+		
 
 		if ('addEventListener' in window) {
 			window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
@@ -291,13 +301,13 @@
 							<center><h3>Gain en cas de succès : <span id="gain"><b>0</b></span> €</h3></center>
 						</p>
 									
-							<form class="form-signin" method="post" action="../Controleur/ctrl_paris.php">
+							<form id="form_submitBet" class="form-signin" method="post" action="../Controleur/ctrl_paris.php">
 								<input type="hidden" id="paris-option" name="paris-option">
 								<input type="hidden" id="paris-mise" name="paris-mise">
 								<input type="hidden" id="paris-cote" name="paris-cote">
 								<input type="hidden" id="paris-event" name="paris-event">
 
-								<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Parier</button>
+								<button class="btn btn-lg btn-primary btn-block text-uppercase" id="button_bet">Parier</button>
 							</form>
 						
 					</section>
