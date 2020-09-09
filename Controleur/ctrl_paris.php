@@ -35,9 +35,9 @@
 				$endDate = new DateTime($_POST["input_eventEndDate"]);
 
 				$evt = new Event();
-				$evt->premiereOption = Team::getNameById($_POST["list_team1"]);
+				$evt->premiereOption = $_POST["input_team1"];
 				$evt->deuxiemeOption = "NUL";
-				$evt->troisiemeOption = Team::getNameById($_POST["list_team2"]);;
+				$evt->troisiemeOption = $_POST["input_team2"];;
 				$evt->cotePremiere = $_POST["input_odds1"];
 				$evt->coteDeuxieme = $_POST["input_oddsnull"];
 				$evt->coteTroisieme = $_POST["input_odds2"];

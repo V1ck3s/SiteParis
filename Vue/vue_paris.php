@@ -115,8 +115,8 @@
 			let heureDebut = $("#input_eventStartTime").val()
 			let dateFin = $("#input_eventEndDate").val()
 			let heureFin = $("#input_eventEndTime").val()
-			let team1 = $("#list_team1").val()
-			let team2 = $("#list_team2").val()
+			let team1 = $("#input_team1").val()
+			let team2 = $("#input_team2").val()
 			let odds1 = $("#input_odds1").val()
 			let oddsnull = $("#input_oddsnull").val()
 			let odds2 = $("#input_odds2").val()
@@ -155,6 +155,22 @@
 			}
 			else
 				$("#input_eventEndTime").css("border-color", "");
+			
+			if(team1 == null || team1 == "" || $("#list_teams").children("[value='" + team1 + "']").length == 0)
+			{
+				$("#input_team1").css("border-color", "red");
+				isValid = false
+			}
+			else
+				$("#input_team1").css("border-color", "");
+			
+			if(team2 == null || team2 == "" || $("#list_teams").children("[value='" + team2 + "']").length == 0)
+			{
+				$("#input_team2").css("border-color", "red");
+				isValid = false
+			}
+			else
+				$("#input_team2").css("border-color", "");
 			
 			if(odds1 == null || odds1 == "" || typeof oods1 === "number")
 			{
@@ -214,11 +230,13 @@
 											</div>
 											<div class="modal-body">
 												<?php
-													$teamList = "";
+													$teamList = "<datalist id='list_teams'>";
 													foreach(Team::getall() as $team)
 													{
-														$teamList .= "<option value='" . $team["id"]. "'>" . $team["nom"] . "</option>";
+														$teamList .= "<option value='" .$team["nom"]. "'>";
 													}
+													$teamList .= "</datalist>";
+													echo $teamList;
 												?>
 												<form id="form_createBet" method="post" action="../Controleur/ctrl_paris.php">
 													<div class="form-group">
@@ -245,15 +263,11 @@
 													</div>
 													<div class="form-group">
 														<label for="list_team1">Equipe n°1</label>
-														<select class="form-control" id="list_team1" name="list_team1">
-															<?php echo $teamList; ?>
-														</select>
+														<input class="form-control" id="input_team1" name="input_team1" list="list_teams">
 													</div>
 													<div class="form-group">
 														<label for="list_team2">Equipe n°2</label>
-														<select class="form-control" id="list_team2" name="list_team2">
-															<?php echo $teamList; ?>
-														</select>
+														<input class="form-control" id="input_team2" name="input_team2" list="list_teams">
 													</div>
 													<div class="form-group">
 														<label for="input_odds1">Côte de l'équipe 1</label>
@@ -313,7 +327,7 @@
 									<thead>
 										<tr height="70">
 											<th>1</th><th>N</th><th>2</th><th>Date</th>
-											<?php if($joueur->isAdmin()) echo '<th>Delete</th>'; ?>
+											<?php if($joueur->isAdmin()) echo '<th>Valider</th>'; ?>
 											<?php if($joueur->isAdmin()) echo '<th>Supprimer</th>'; ?>
 										</tr>
 									</thead>
