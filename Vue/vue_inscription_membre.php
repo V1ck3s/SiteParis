@@ -122,7 +122,7 @@ body {
         <div class="card card-signin my-5">
           <div class="card-body">
 		  <center>
-			  <span class="avatar"><img src="http://fr.bar-sports.com/forum-sport/uploads/set_resources_2/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png" alt="" width="200px" /></span>
+			  <span class="avatar"><img src="/assets/image.png" alt="" width="200px" /></span>
 			</center>
 			<br>
 			<h5 class="card-title text-center">S'inscrire</h5>

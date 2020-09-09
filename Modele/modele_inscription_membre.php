@@ -14,7 +14,7 @@
 			$pass=password_hash($_POST['conn_pass'], PASSWORD_DEFAULT);
 			//requete SQL récupérant toutes les informations sur l'utilisateur
 			//$reqSQL="SELECT * FROM utilisateur WHERE login=:login AND mdp=:pass";
-			$reqSQL="INSERT INTO utilisateur (login, mdp, argent) VALUES (:login, :pass, '200')";
+			$reqSQL="INSERT INTO utilisateur (login, mdp, argent) VALUES (:login, :pass, '1000')";
 			$unLogin = $this->cx->prepare($reqSQL);
 			
 			//j'associe les paramètres	

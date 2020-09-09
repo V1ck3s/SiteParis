@@ -41,7 +41,8 @@ th {
 					</br>
 						</br>
 						<p>
-							<table class="table-striped table-dark" cellpadding="15" width="100%"><tr height="70"><th>Login</th><th>Argent</th></tr>
+							<center>
+							<table class="table-striped table-dark col-sm-12 col-xl-6" cellpadding="15"><tr height="70"><th>Login</th><th>Argent</th></tr>
 							<?php
 								while($unClassement=$lesClassements->fetch(PDO::FETCH_OBJ))
 								{
@@ -49,6 +50,7 @@ th {
 								}
 							?>
 							</table>
+							</center>
 						</p>
 							
 						

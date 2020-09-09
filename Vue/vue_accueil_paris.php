@@ -37,7 +37,8 @@ th {
 					<br>
 				<center><h1>Nouveautés :</h1></center>
 					</br>
-					<table class="table table-striped table-dark">
+					<center>
+					<table class="table table-striped table-dark col-sm-12 col-xl-6 text-center">
 					<?php
 						while($uneNews=$lesNews->fetch(PDO::FETCH_OBJ))
 						{
@@ -46,7 +47,7 @@ th {
 								</tr>";
 						}
 					?>
-					</table>
+						</table></center>
 				</section>
 
 				<!-- Footer -->

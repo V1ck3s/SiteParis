@@ -17,8 +17,8 @@ th {
 	line-height: 26.4px;
 	border: thin solid #6495ed;
 	padding: 15px;
-	background-color: #6d6d6d;*/
-}
+	background-color: #6d6d6d;
+}*/
 
 .paris-case.active
 {
@@ -115,7 +115,8 @@ $(function()
 							<center><h1>Événements à venir :</h1></center>
 							<br>
 						</br>
-							<table class="table-striped table-dark" cellpadding="15" width="100%"><tr height="70"><th>1</th><th>N</th><th>2</th><th>Date</th></tr>
+							<center>
+							<table class="table-striped table-dark col-sm-12 col-xl-6" cellpadding="15"><tr height="70"><th>1</th><th>N</th><th>2</th><th>Date</th></tr>
 							<?php
 								while($unParis=$lesParis->fetch(PDO::FETCH_OBJ))
 								{
@@ -133,13 +134,16 @@ $(function()
 								}
 							?>
 							</table>
+				</center>
 						</p>
 						</br>
 						<p>
 							<center><h3>Votre mise :</h3> </center>
-							<div class="form-group">
-								<input class="form-control" type="number" id="someid" onchange="test()" min="1" max="<?php echo $argentJoueur->argent; ?>"/> €
-							</div>
+							<center>
+								<div class="form-group col-sm-12 col-xl-1" style="display: block ruby;">
+									<input class="form-control" type="number" id="someid" onchange="test()" min="1" max="<?php echo $argentJoueur->argent; ?>"/> €
+								</div>
+							</center>
 						</br>
 							<center><h3>Gain en cas de succès : <span id="gain"><b>0</b></span> €</h3></center>
 						</p>
@@ -149,8 +153,10 @@ $(function()
 								<input type="hidden" id="paris-mise" name="paris-mise">
 								<input type="hidden" id="paris-cote" name="paris-cote">
 								<input type="hidden" id="paris-event" name="paris-event">
-
-								<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Parier</button>
+								
+								<center>
+									<button class="btn btn-lg btn-success btn-block text-uppercase col-sm-12 col-xl-3" type="submit">Parier</button>
+								</center>
 							</form>
 						
 
