@@ -296,8 +296,8 @@
 						</br>
 						<p>
 							<center><h3>Votre mise :</h3> </center>
-							<div class="form-group" style="display: block ruby;">
-								<center>
+							<div class="form-group">
+								<center style="display: block ruby;">
 									<input class="form-control col-sm-12 col-xl-1" type="number" id="someid" onchange="test()" min="1" max="<?=$joueur->getMoney()?>"/> €
 								</center>
 							</div>
@@ -311,7 +311,7 @@
 								<input type="hidden" id="paris-cote" name="paris-cote">
 								<input type="hidden" id="paris-event" name="paris-event">
 								<center>
-									<button class="btn btn-lg btn-sucess btn-block text-uppercase col-sm-12 col-xl-3" id="button_bet">Parier</button>
+									<button class="btn btn-lg btn-success btn-block text-uppercase col-sm-12 col-xl-3" id="button_bet">Parier</button>
 								</center>
 							</form>
 						
