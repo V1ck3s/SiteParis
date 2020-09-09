@@ -42,7 +42,7 @@
 						success: function(response)
 						{
 							if(response == "done")
-								$(".paris-row[data-id='" + id + "']").remove();
+								$(".paris-row[data-id='" + id + "']").remove()
 						},
 						error: function()
 						{
@@ -50,6 +50,19 @@
 						}
 					})
 				}
+			})
+
+			$(".paris-validate-icon").click(function()
+			{
+				let id = $(this).attr("data-id")
+				$(".bet_id").val(id)
+				let team1 = $("th.paris-team1[data-id='" + id + "']").html()
+				team1 = team1.substring(0, team1.indexOf("<br>"))
+				let team2 = $("th.paris-team2[data-id='" + id + "']").html()
+				team2 = team2.substring(0, team2.indexOf("<br>"))
+				$("#list_winner_team1").html(team1)
+				$("#list_winner_team2").html(team2)
+				$("#modal_validateBet").modal()
 			})
 
 			$("#someid").change(function()
@@ -263,6 +276,35 @@
 							}
 						?>
 
+						
+						<div class="modal" tabindex="-1" id="modal_validateBet">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Valider un pari</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="form_validateBet" method="post" action="../Controleur/ctrl_paris.php">
+											<input type="hidden" class="bet_id" name="bet_id" />
+											<label for="list_winner">Vainqueur</label>
+											<select id="list_winner" name="list_winner">
+												<option value="1" id="list_winner_team1"></option>
+												<option value="null">Match null</option>
+												<option value="2" id="list_winner_team2"></option>
+											</select>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+										<button type="button" class="btn btn-primary" onClick="document.getElementById('form_validateBet').submit()">Valider</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
 						<p>
 							<center><h1>Événements à venir :</h1></center>
 							<br></br>
@@ -270,7 +312,8 @@
 								<thead>
 									<tr height="70">
 										<th>1</th><th>N</th><th>2</th><th>Date</th>
-										<?php if($joueur->isAdmin()) echo '<th>Delete</th>'; ?>
+										<?php if($joueur->isAdmin()) echo '<th>Valider</th>'; ?>
+										<?php if($joueur->isAdmin()) echo '<th>Supprimer</th>'; ?>
 									</tr>
 								</thead>
 								<tbody>
@@ -278,10 +321,11 @@
 								foreach(Event::getAllNext() as $event)
 								{
 									$string = '<tr class="paris-row" data-id="' . $event["id"] . '">';
-										$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["cotePremiere"] . '" data-option="' . $event["premiereOption"] . '">' . $event["premiereOption"] . '<br><br>' . number_format($event["cotePremiere"], 2, ',', ' ') . '</th>';
+										$string .= '<th class="paris-case paris-team1" data-id="' . $event["id"] . '" data-cote="' . $event["cotePremiere"] . '" data-option="' . $event["premiereOption"] . '">' . $event["premiereOption"] . '<br><br>' . number_format($event["cotePremiere"], 2, ',', ' ') . '</th>';
 										$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteDeuxieme"] . '" data-option="' . $event["deuxiemeOption"] . '">' . $event["deuxiemeOption"] . '<br><br>' . number_format($event["coteDeuxieme"], 2, ',', ' ') . '</th>';
-										$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteTroisieme"] . '" data-option="' . $event["troisiemeOption"] . '">' . $event["troisiemeOption"] . '<br><br>' . number_format($event["coteTroisieme"], 2, ',', ' ') . '</th>';
+										$string .= '<th class="paris-case paris-team2" data-id="' . $event["id"] . '" data-cote="' . $event["coteTroisieme"] . '" data-option="' . $event["troisiemeOption"] . '">' . $event["troisiemeOption"] . '<br><br>' . number_format($event["coteTroisieme"], 2, ',', ' ') . '</th>';
 										$string .= '<th>' . $event["heureDebut"] . '</th>';
+										if($joueur->isAdmin()) $string .= '<th><img src="../assets/img/validate.webp" class="paris-validate-icon" data-id="' . $event["id"] . '"/></th>';
 										if($joueur->isAdmin()) $string .= '<th><img src="../assets/img/delete.png" class="paris-delete-icon" data-id="' . $event["id"] . '"/></th>';
 									$string .= '</tr>';
 

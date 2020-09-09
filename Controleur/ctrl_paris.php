@@ -57,6 +57,37 @@
 				include("../Vue/vue_paris.php");
 				include('../newStyle.css.php');
 			}
+			elseif(isset($_POST['list_winner'])) // Un admin à validé un événement
+			{
+				$id = $_POST['bet_id'];
+				$winner = $_POST['list_winner'];
+
+				$evt = new Event($id);
+				switch($winner)
+				{
+					case 1: // Equipe 1 gagnante
+						$evt->optionGagnant = $evt->premiereOption;
+					break;
+					case "null": // Match nul
+						$evt->optionGagnant = $evt->deuxiemeOption;
+					break;
+					case 2: // Equipe 2 gagnante
+						$evt->optionGagnant = $evt->troisiemeOption;
+					break;
+				}
+
+				if($evt->validate())
+					echo '<div class="alert alert-success" role="alert">
+							Pari validé, les joueurs ont reçu leurs gains !
+						</div>';
+				else
+					echo '
+						<div class="alert alert-danger" role="alert">
+							Erreur lors de la validation de l\'évenement !
+						</div>';
+				include("../Vue/vue_paris.php");
+				include('../newStyle.css.php');
+			}
 		}
 		else
 		{

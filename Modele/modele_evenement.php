@@ -1,5 +1,5 @@
 <?php
-
+	require_once('modele_joueur.php');
 	class Event {
 		//attribut priv� qui recevra une instance de la connexion
 		private $cx;
@@ -68,6 +68,42 @@
 			$query = "DELETE FROM event WHERE id = :id";
 			$req = $this->cx->prepare($query);
 			$req->execute(array(":id" => $this->id));
+			return $req->rowCount() > 0;
+		}
+		
+		public function validate() {
+			$query = "UPDATE event SET optionGagnant = :winner WHERE id = :id";
+
+			$req = $this->cx->prepare($query);
+			$req->execute(array(
+				":winner" => $this->optionGagnant,
+				":id" => $this->id
+			));
+
+			$query = "SELECT loginJoueur, optionChoisis, gainRecupere FROM paris WHERE idEvent = :id";
+			$reqSelect = $this->cx->prepare($query);
+
+			$query = "UPDATE paris SET argentRecup = 1 WHERE idEvent = :id AND optionChoisis = :winner";
+			$reqUpdateParis = $this->cx->prepare($query);
+
+			$reqSelect->execute(array(
+				":id" => $this->id
+			));
+
+			while($row = $reqSelect->fetch())
+			{
+				$reqUpdateParis->execute(array(
+					":id" => $this->id,
+					":winner" => $this->optionGagnant
+				));
+				if($reqUpdateParis->rowCount() > 0)
+				{
+					$j = new Player($row['loginJoueur']);
+					$j->giveMoney($row['gainRecupere']);
+					$j->save();
+				}
+			}
+
 			return $req->rowCount() > 0;
 		}
 		

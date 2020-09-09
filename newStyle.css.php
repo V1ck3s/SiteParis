@@ -115,14 +115,19 @@
   {
     background: rgb(204, 51, 51) none repeat scroll 0% 0%;
   }
-  .paris-delete-icon
+  .paris-delete-icon, .paris-validate-icon
   {
-    width: 30px;
+    width: 32px;
+    padding: 5px;
+    border-radius: 5px;
     cursor: pointer;
+    background-color: #6c757d;
   }
-  .paris-delete-icon:hover
+  .paris-delete-icon:hover, .paris-validate-icon:hover
   {
+    padding: 0px;
     border-radius: 50px;
-    transition: 1s all linear:
+    transition: 0.2s all linear;
+    background-color: #007bff;
   }
   </style>
