@@ -1,8 +1,8 @@
 <?php
-	require("../Modele/modele_paris.php");
-	require("../Modele/modele_equipe.php");
 	require("../Modele/modele_joueur.php");
 	require("../Modele/modele_evenement.php");
+	require("../Modele/modele_paris.php");
+	require("../Modele/modele_equipe.php");
 
 	include("../utils/header.php");
 

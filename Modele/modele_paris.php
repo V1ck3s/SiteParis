@@ -1,58 +1,53 @@
 <?php
-	class Paris{
-		//attribut privé qui recevra une instance de la connexion
+	require_once("modele_joueur.php");
+	require_once("modele_evenement.php");
+	class Paris {
 		private $cx;
 		
-		public function __construct(){
+		public $joueur = null;
+		public $event = null;
+		public $optionChoisis = "";
+		public $mise = -1;
+		public $cote = -1;
+		public $gain = -1;
+
+		public function __construct($id = -1){
 			require_once("../Modele/modele_connexion_base.php");
 			$this->cx = Connexion::getInstance();
-		}
-		
-		//Retourne un curseur contenant toutes les recettes
-		public function readAll(){
-			$req = "SELECT *
-					FROM event
-					WHERE heureDebut >= NOW()
-					ORDER BY heureDebut ASC";
-			$curseur=$this->cx->query($req);
-			return $curseur;
-		}
-		
-		public function argentJoueur($idJoueur){
-			//je reçois ma requête SQL
-			$req = "SELECT *
-					FROM utilisateur
-					WHERE login = :id";
-			
-			//je prépare ma requête
-			$prep = $this->cx->prepare($req);
-			
-			//j'associe les paramètres
-			$prep->bindValue(':id', $idJoueur, PDO::PARAM_STR);
-			
-			//j'exécute
-			$prep->execute();
-			
-			//je remplis le curseur
-			$curseur = $prep->fetchObject();
-			return $curseur;
+
+			if($id != -1 && is_numeric($id))
+			{
+				$req = $this->cx->prepare("SELECT * FROM paris WHERE id = :id");
+				$req->execute(array(":id" => $id));
+				$result = $req->fetch();
+				if(count($result) > 0)
+				{
+					$this->id = $result["id"];
+					$this->joueur = new Player($result["loginJoueur"]);
+					$this->event = new Event($result["idEvent"]);
+					$this->optionChoisis = $result["optionChoisis"];
+					$this->mise = $result["mise"];
+					$this->cote = $result["cote"];
+					$this->gain = $result["gainRecupere"];
+				}
+			}
 		}
 
-		//retourne un curseur contenant l'objet associer à l'identifiant passé en paramètre
-		//on utilise ici la technique des requêtes préparées qui permettent d'éviter les injonctions SQL
+		//retourne un curseur contenant l'objet associer ï¿½ l'identifiant passï¿½ en paramï¿½tre
+		//on utilise ici la technique des requï¿½tes prï¿½parï¿½es qui permettent d'ï¿½viter les injonctions SQL
 		public function findById($idParis){
-			//je reçois ma requête SQL
+			//je reï¿½ois ma requï¿½te SQL
 			$req = "SELECT *
 					FROM utilisateur
 					WHERE id = :id";
 			
-			//je prépare ma requête
+			//je prï¿½pare ma requï¿½te
 			$prep = $this->cx->prepare($req);
 			
-			//j'associe les paramètres
+			//j'associe les paramï¿½tres
 			$prep->bindValue(':id', $idParis, PDO::PARAM_STR);
 			
-			//j'exécute
+			//j'exï¿½cute
 			$prep->execute();
 			
 			//je remplis le curseur
@@ -61,10 +56,10 @@
 		}
 		
 		public function creerParis(){
-			//Booléen permettant de vérifier l'éxécution de la requête
+			//Boolï¿½en permettant de vï¿½rifier l'ï¿½xï¿½cution de la requï¿½te
 			$valid=false;
 		  
-			//récupération des valeurs des champs:
+			//rï¿½cupï¿½ration des valeurs des champs:
 			$loginJoueur=$_SESSION['login'];
 			$idEvent=$_POST['paris-event'];
 			$optionChoisis=$_POST['paris-option'];
@@ -75,7 +70,7 @@
 
 
 			
-			//création de la requête SQL:
+			//crï¿½ation de la requï¿½te SQL:
 			$sql="INSERT INTO paris(loginJoueur, idEvent, optionChoisis, gainRecupere, mise, cote)
 				VALUES (:loginJoueur, :idEvent, :optionChoisis, :gainRecupere, :mise, :cote)";
 				
@@ -90,16 +85,16 @@
 			$requete->bindValue(":cote",$cote,PDO::PARAM_STR);			
 			
 			
-			//exécution de la requête SQL:
+			//exï¿½cution de la requï¿½te SQL:
 			$requete->execute();
 			
-			//récupération de l'ID inséré			
+			//rï¿½cupï¿½ration de l'ID insï¿½rï¿½			
 			//$new_recette = $this->cx->lastInsertId();
 			
-			//récupération des valeurs des champs:
+			//rï¿½cupï¿½ration des valeurs des champs:
 			$argentRetire=$_POST['paris-mise'];
 			
-			//création de la requête SQL:
+			//crï¿½ation de la requï¿½te SQL:
 			$sql2="UPDATE utilisateur
 				SET argent = argent-:argent
 				WHERE login = :loginJoueur";
@@ -111,13 +106,26 @@
 			$requete2->bindValue(":loginJoueur",$loginJoueur,PDO::PARAM_STR);
 			//$requete2->bindValue(":new_recette",$new_recette,PDO::PARAM_INT);
 			
-			//exécution de la requête SQL:
+			//exï¿½cution de la requï¿½te SQL:
 			$requete2->execute();
 			
 			if($requete && $requete2){
 				$valid=true;
 			}
 			return $valid;
+		}
+		
+		//Retourne un curseur contenant tous les paris
+		public static function readAll(){
+			require_once("../Modele/modele_connexion_base.php");
+			$cx = Connexion::getInstance();
+
+			$req = "SELECT *
+					FROM event
+					WHERE heureDebut >= NOW()
+					ORDER BY heureDebut ASC";
+			$curseur=$cx->query($req);
+			return $curseur;
 		}
 	}
 ?>

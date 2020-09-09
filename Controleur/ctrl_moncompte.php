@@ -1,21 +1,12 @@
 <?php
 	
-	require("../Modele/modele_moncompte.php");
-		
-	$r= new Compte();
+	require("../Modele/modele_joueur.php");
+	require("../Modele/modele_paris.php");
+
 	include("../utils/header.php");
-	$leCompte=$r->findById($_SESSION['login']);
-	$lesComptes=$r->parisCompte($_SESSION['login']);
-	if($_POST != null)
-   	{
-		$reussi=$r->actualiserGain();
-		if($reussi){
-			header('Location: ../Controleur/ctrl_moncompte.php');
-		}
-		else{
-			header('Location: ../Controleur/ctrl_accueil_paris.php');
-		}
-   	}
+	
+	$joueur = new Player($_SESSION["login"]);
+
 	include("../Vue/vue_moncompte.php");
 	include('../newStyle.css.php');
 ?>	

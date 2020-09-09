@@ -26,6 +26,11 @@ table{
 
 
 <html>
+	<script type="text/javascript">
+		$(function() {
+			$(".bet_row").tooltip('show')
+		})
+	</script>
 	<body class="is-loading">
 
 		<!-- Wrapper -->
@@ -50,8 +55,8 @@ table{
 							<table class="table-striped table-dark" cellpadding="15px">
 							<tr>
 							<?php
-								echo "<th>Login : ".$leCompte->login."</br></th></tr>";
-								echo "<tr><th>Argent : ".$leCompte->argent."€</br></th></tr>";
+								echo "<th>Login : ".$joueur->getLogin()."</br></th></tr>";
+								echo "<tr><th>Argent : ".$joueur->getMoney()."€</br></th></tr>";
 							?>
 							</tr>
 							</table>
@@ -63,19 +68,25 @@ table{
 </br>
 								<table class="table-striped table-dark col-sm-12 col-xl-6" cellpadding="15"><tr height="70"><th>Parié sur</th><th>Pour le match du</th><th>Mise</th><th>Gain</th><th>Gagné/Perdu</th></tr>
 								<?php
-
-									while($unCompte=$lesComptes->fetch(PDO::FETCH_OBJ))
+									$bets = $joueur->getBets();
+									foreach($bets as $bet)
 									{
-										if($unCompte->optionChoisis == $unCompte->optionGagnant &&  $unCompte->optionGagnant != ""){
-											$gagnePerdu = "Gagné";
+										if($bet->event->optionGagnant == "")
+											$verdict = "A venir";
+										else
+										{
+											if($bet->optionChoisis == $bet->event->optionGagnant)
+												$verdict = "Gagné";
+											else
+												$verdict = "Perdu";
 										}
-										else if($unCompte->optionChoisis != $unCompte->optionGagnant &&  $unCompte->optionGagnant != ""){
-											$gagnePerdu = "Perdu";
-										}
-										else{
-											$gagnePerdu = "A venir";
-										}
-										echo "<tr><th>".$unCompte->optionChoisis."</th><th>".$unCompte->heureDebut."</th><th>".$unCompte->mise."€</th><th>".$unCompte->gainRecupere."€</th><th>".$gagnePerdu."</th></tr>";
+										echo "<tr class='bet_row " .(($verdict == "Gagné") ? "table-success" : (($verdict == "Perdu") ? "table-danger" : "")) . "' data-toggle='tooltip' data-placement='left' data-trigger='manual' title='" .$bet->event->premiereOption. " vs " .$bet->event->troisiemeOption. "'>
+											<th>".$bet->optionChoisis."</th>
+											<th>".$bet->event->heureDebut."</th>
+											<th>".$bet->mise."€</th>
+											<th>".$bet->gain."€</th>
+											<th>".$verdict."</th>
+										</tr>";
 									}
 								?>
 								</table>
