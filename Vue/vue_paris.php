@@ -264,38 +264,42 @@
 						?>
 
 						<p>
-							<center><h1>Événements à venir :</h1></center>
-							<br></br>
-							<table class="table table-striped table-dark" cellpadding="15" width="100%">
-								<thead>
-									<tr height="70">
-										<th>1</th><th>N</th><th>2</th><th>Date</th>
-										<?php if($joueur->isAdmin()) echo '<th>Delete</th>'; ?>
-									</tr>
-								</thead>
-								<tbody>
-							<?php
-								foreach(Event::getAllNext() as $event)
-								{
-									$string = '<tr class="paris-row" data-id="' . $event["id"] . '">';
-										$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["cotePremiere"] . '" data-option="' . $event["premiereOption"] . '">' . $event["premiereOption"] . '<br><br>' . number_format($event["cotePremiere"], 2, ',', ' ') . '</th>';
-										$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteDeuxieme"] . '" data-option="' . $event["deuxiemeOption"] . '">' . $event["deuxiemeOption"] . '<br><br>' . number_format($event["coteDeuxieme"], 2, ',', ' ') . '</th>';
-										$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteTroisieme"] . '" data-option="' . $event["troisiemeOption"] . '">' . $event["troisiemeOption"] . '<br><br>' . number_format($event["coteTroisieme"], 2, ',', ' ') . '</th>';
-										$string .= '<th>' . $event["heureDebut"] . '</th>';
-										if($joueur->isAdmin()) $string .= '<th><img src="../assets/img/delete.png" class="paris-delete-icon" data-id="' . $event["id"] . '"/></th>';
-									$string .= '</tr>';
+							<center>
+								<h1>Événements à venir :</h1>
+								<br></br>
+								<table class="table table-striped table-dark col-sm-12 col-xl-6" cellpadding="15" width="100%">
+									<thead>
+										<tr height="70">
+											<th>1</th><th>N</th><th>2</th><th>Date</th>
+											<?php if($joueur->isAdmin()) echo '<th>Delete</th>'; ?>
+										</tr>
+									</thead>
+									<tbody>
+								<?php
+									foreach(Event::getAllNext() as $event)
+									{
+										$string = '<tr class="paris-row" data-id="' . $event["id"] . '">';
+											$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["cotePremiere"] . '" data-option="' . $event["premiereOption"] . '">' . $event["premiereOption"] . '<br><br>' . number_format($event["cotePremiere"], 2, ',', ' ') . '</th>';
+											$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteDeuxieme"] . '" data-option="' . $event["deuxiemeOption"] . '">' . $event["deuxiemeOption"] . '<br><br>' . number_format($event["coteDeuxieme"], 2, ',', ' ') . '</th>';
+											$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteTroisieme"] . '" data-option="' . $event["troisiemeOption"] . '">' . $event["troisiemeOption"] . '<br><br>' . number_format($event["coteTroisieme"], 2, ',', ' ') . '</th>';
+											$string .= '<th>' . $event["heureDebut"] . '</th>';
+											if($joueur->isAdmin()) $string .= '<th><img src="../assets/img/delete.png" class="paris-delete-icon" data-id="' . $event["id"] . '"/></th>';
+										$string .= '</tr>';
 
-									echo $string;
-								}
-							?>
-								</tbody>
-							</table>
+										echo $string;
+									}
+								?>
+									</tbody>
+								</table>
+							</center>
 						</p>
 						</br>
 						<p>
 							<center><h3>Votre mise :</h3> </center>
-							<div class="form-group">
-								<input class="form-control" type="number" id="someid" onchange="test()" min="1" max="<?=$joueur->getMoney()?>"/> €
+							<div class="form-group" style="display: block ruby;">
+								<center>
+									<input class="form-control col-sm-12 col-xl-1" type="number" id="someid" onchange="test()" min="1" max="<?=$joueur->getMoney()?>"/> €
+								</center>
 							</div>
 						</br>
 							<center><h3>Gain en cas de succès : <span id="gain"><b>0</b></span> €</h3></center>
@@ -306,8 +310,9 @@
 								<input type="hidden" id="paris-mise" name="paris-mise">
 								<input type="hidden" id="paris-cote" name="paris-cote">
 								<input type="hidden" id="paris-event" name="paris-event">
-
-								<button class="btn btn-lg btn-primary btn-block text-uppercase" id="button_bet">Parier</button>
+								<center>
+									<button class="btn btn-lg btn-sucess btn-block text-uppercase col-sm-12 col-xl-3" id="button_bet">Parier</button>
+								</center>
 							</form>
 						
 					</section>
