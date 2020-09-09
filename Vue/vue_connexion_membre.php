@@ -126,7 +126,7 @@ body {
 			</center>
 			<br>
 			<h5 class="card-title text-center">Se connecter</h5>
-            <form class="form-signin" name="inscription" action="/Controleur/ctrl_connexion_membre.php?mem=true" method="POST">
+            <form class="form-signin" name="inscription" action="/Controleur/ctrl_connexion_membre.php" method="POST">
               <div class="form-label-group">
                 <input type="text" name="conn_login" id="conn_login" class="form-control" placeholder="Email address" required autofocus>
                 <label for="conn_login">Login</label>
@@ -138,11 +138,11 @@ body {
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Retenir mot de passe</label>
+                <input type="checkbox" class="custom-control-input" id="conn_savepwd" name="conn_savepwd">
+                <label class="custom-control-label" for="conn_savepwd">Retenir mot de passe</label>
                 
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="envoyer">Se connecter</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="loginForm">Se connecter</button>
 
               <hr class="my-4">
               <button onclick="location.href = 'Controleur/ctrl_inscription_membre.php';" class="btn btn-lg btn-danger btn-block text-uppercase" id="inscription">S'inscrire</button>

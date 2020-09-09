@@ -13,7 +13,7 @@
 
 <html>
 <?php 
-		if(basename($_SERVER["SCRIPT_FILENAME"], '.php') != "index" && basename($_SERVER["SCRIPT_FILENAME"], '.php') != "ctrl_inscription_membre" ){
+		if(isset($_SESSION['login']) && $_SESSION['login'] != "") {
 			include('../navBar.php');
 		}
 		

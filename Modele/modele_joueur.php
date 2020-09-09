@@ -22,13 +22,28 @@
 				$req->execute(array(":login1" => $identifier));
 			}
 			$result = $req->fetch();
-			if(count($result) > 0)
+			if($result)
 			{
-				$this->id = $result["id"];
-				$this->login = $result["login"];
-				$this->money = $result["argent"];
-				$this->isAdmin = $result["isAdmin"];
+				if(count($result) > 0)
+				{
+					$this->id = $result["id"];
+					$this->login = $result["login"];
+					$this->money = $result["argent"];
+					$this->isAdmin = $result["isAdmin"];
+				}
 			}
+		}
+
+		public function connect($password)
+		{
+			$query = "SELECT mdp FROM utilisateur WHERE id = :id;";
+			$req = $this->cx->prepare($query);
+			$req->execute(array(":id" => $this->id));
+			$result = $req->fetch();
+			if(!$result)
+				return false;
+
+			return password_verify($password, $result['mdp']);
 		}
 
 		public function save()
