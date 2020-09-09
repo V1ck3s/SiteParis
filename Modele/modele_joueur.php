@@ -13,13 +13,13 @@
 
             if(is_numeric($identifier))
             {
-                $req = $this->cx->prepare("SELECT * FROM utilisateur WHERE id = :id");
+                $req = $this->cx->prepare("SELECT * FROM utilisateur WHERE id = :id;");
                 $req->execute(array(":id" => $identifier));
             }
             else
             {
-                $req = $this->cx->prepare("SELECT * FROM utilisateur WHERE login = :login");
-                $req->execute(array(":login" => $identifier));
+                $req = $this->cx->prepare("SELECT * FROM utilisateur WHERE login = :login1;");
+                $req->execute(array(":login1" => $identifier));
             }
             $result = $req->fetch();
             if(count($result) > 0)
@@ -31,6 +31,32 @@
             }
         }
 
+        public function save()
+        {
+            $query = "SELECT * FROM utilisateur WHERE id = :id";
+            $req = $this->cx->prepare($query);
+            $req->execute(array(":id" => $this->id));
+            if($req->fetch()) // L'utilisateur existe, on écrase les données
+            {
+                $query = "UPDATE utilisateur SET login = :login1, argent = :argent WHERE id = :id;";
+                $req = $this->cx->prepare($query);
+                $req->execute(array(
+                    ":login1" => $this->login,
+                    ":argent" => $this->money,
+                    ":id" => $this->id
+                ));
+            }
+            else
+            {
+                $query = "INSERT INTO utilisateur (login, argent) VALUES (:login1, :argent);";
+                $req = $this->cx->prepare($query);
+                $req->execute(array(
+                    ":login1" => $this->login,
+                    ":argent" => $this->money
+                ));
+            }
+        }
+
         public function getLogin()
         {
             return $this->login;
@@ -39,6 +65,20 @@
         public function getMoney()
         {
             return $this->money;
+        }
+
+        public function giveMoney($amount)
+        {
+            $this->money += $amount;
+        }
+
+        public function takeMoney($amount)
+        {
+            if(($this->money - $amount) < 0)
+                return false;
+
+            $this->money -= $amount;
+            return true;
         }
 
         public function isAdmin()

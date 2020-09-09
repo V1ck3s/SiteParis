@@ -42,7 +42,7 @@
 						success: function(response)
 						{
 							if(response == "done")
-								$(".paris-row[data-id='" + id + "']").remove();
+								$(".paris-row[data-id='" + id + "']").remove()
 						},
 						error: function()
 						{
@@ -50,6 +50,19 @@
 						}
 					})
 				}
+			})
+
+			$(".paris-validate-icon").click(function()
+			{
+				let id = $(this).attr("data-id")
+				$(".bet_id").val(id)
+				let team1 = $("th.paris-team1[data-id='" + id + "']").html()
+				team1 = team1.substring(0, team1.indexOf("<br>"))
+				let team2 = $("th.paris-team2[data-id='" + id + "']").html()
+				team2 = team2.substring(0, team2.indexOf("<br>"))
+				$("#list_winner_team1").html(team1)
+				$("#list_winner_team2").html(team2)
+				$("#modal_validateBet").modal()
 			})
 
 			$("#someid").change(function()
@@ -102,8 +115,8 @@
 			let heureDebut = $("#input_eventStartTime").val()
 			let dateFin = $("#input_eventEndDate").val()
 			let heureFin = $("#input_eventEndTime").val()
-			let team1 = $("#list_team1").val()
-			let team2 = $("#list_team2").val()
+			let team1 = $("#input_team1").val()
+			let team2 = $("#input_team2").val()
 			let odds1 = $("#input_odds1").val()
 			let oddsnull = $("#input_oddsnull").val()
 			let odds2 = $("#input_odds2").val()
@@ -142,6 +155,22 @@
 			}
 			else
 				$("#input_eventEndTime").css("border-color", "");
+			
+			if(team1 == null || team1 == "" || $("#list_teams").children("[value='" + team1 + "']").length == 0)
+			{
+				$("#input_team1").css("border-color", "red");
+				isValid = false
+			}
+			else
+				$("#input_team1").css("border-color", "");
+			
+			if(team2 == null || team2 == "" || $("#list_teams").children("[value='" + team2 + "']").length == 0)
+			{
+				$("#input_team2").css("border-color", "red");
+				isValid = false
+			}
+			else
+				$("#input_team2").css("border-color", "");
 			
 			if(odds1 == null || odds1 == "" || typeof oods1 === "number")
 			{
@@ -201,11 +230,13 @@
 											</div>
 											<div class="modal-body">
 												<?php
-													$teamList = "";
+													$teamList = "<datalist id='list_teams'>";
 													foreach(Team::getall() as $team)
 													{
-														$teamList .= "<option value='" . $team["id"]. "'>" . $team["nom"] . "</option>";
+														$teamList .= "<option value='" .$team["nom"]. "'>";
 													}
+													$teamList .= "</datalist>";
+													echo $teamList;
 												?>
 												<form id="form_createBet" method="post" action="../Controleur/ctrl_paris.php">
 													<div class="form-group">
@@ -232,15 +263,11 @@
 													</div>
 													<div class="form-group">
 														<label for="list_team1">Equipe n°1</label>
-														<select class="form-control" id="list_team1" name="list_team1">
-															<?php echo $teamList; ?>
-														</select>
+														<input class="form-control" id="input_team1" name="input_team1" list="list_teams">
 													</div>
 													<div class="form-group">
 														<label for="list_team2">Equipe n°2</label>
-														<select class="form-control" id="list_team2" name="list_team2">
-															<?php echo $teamList; ?>
-														</select>
+														<input class="form-control" id="input_team2" name="input_team2" list="list_teams">
 													</div>
 													<div class="form-group">
 														<label for="input_odds1">Côte de l'équipe 1</label>
@@ -263,6 +290,35 @@
 							}
 						?>
 
+						
+						<div class="modal" tabindex="-1" id="modal_validateBet">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Valider un pari</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="form_validateBet" method="post" action="../Controleur/ctrl_paris.php">
+											<input type="hidden" class="bet_id" name="bet_id" />
+											<label for="list_winner">Vainqueur</label>
+											<select id="list_winner" name="list_winner">
+												<option value="1" id="list_winner_team1"></option>
+												<option value="null">Match null</option>
+												<option value="2" id="list_winner_team2"></option>
+											</select>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+										<button type="button" class="btn btn-primary" onClick="document.getElementById('form_validateBet').submit()">Valider</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
 						<p>
 							<center>
 								<h1>Événements à venir :</h1>
@@ -271,7 +327,8 @@
 									<thead>
 										<tr height="70">
 											<th>1</th><th>N</th><th>2</th><th>Date</th>
-											<?php if($joueur->isAdmin()) echo '<th>Delete</th>'; ?>
+											<?php if($joueur->isAdmin()) echo '<th>Valider</th>'; ?>
+											<?php if($joueur->isAdmin()) echo '<th>Supprimer</th>'; ?>
 										</tr>
 									</thead>
 									<tbody>
@@ -279,10 +336,11 @@
 									foreach(Event::getAllNext() as $event)
 									{
 										$string = '<tr class="paris-row" data-id="' . $event["id"] . '">';
-											$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["cotePremiere"] . '" data-option="' . $event["premiereOption"] . '">' . $event["premiereOption"] . '<br><br>' . number_format($event["cotePremiere"], 2, ',', ' ') . '</th>';
+											$string .= '<th class="paris-case paris-team1" data-id="' . $event["id"] . '" data-cote="' . $event["cotePremiere"] . '" data-option="' . $event["premiereOption"] . '">' . $event["premiereOption"] . '<br><br>' . number_format($event["cotePremiere"], 2, ',', ' ') . '</th>';
 											$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteDeuxieme"] . '" data-option="' . $event["deuxiemeOption"] . '">' . $event["deuxiemeOption"] . '<br><br>' . number_format($event["coteDeuxieme"], 2, ',', ' ') . '</th>';
-											$string .= '<th class="paris-case" data-id="' . $event["id"] . '" data-cote="' . $event["coteTroisieme"] . '" data-option="' . $event["troisiemeOption"] . '">' . $event["troisiemeOption"] . '<br><br>' . number_format($event["coteTroisieme"], 2, ',', ' ') . '</th>';
+											$string .= '<th class="paris-case paris-team2" data-id="' . $event["id"] . '" data-cote="' . $event["coteTroisieme"] . '" data-option="' . $event["troisiemeOption"] . '">' . $event["troisiemeOption"] . '<br><br>' . number_format($event["coteTroisieme"], 2, ',', ' ') . '</th>';
 											$string .= '<th>' . $event["heureDebut"] . '</th>';
+											if($joueur->isAdmin()) $string .= '<th><img src="../assets/img/validate.webp" class="paris-validate-icon" data-id="' . $event["id"] . '"/></th>';
 											if($joueur->isAdmin()) $string .= '<th><img src="../assets/img/delete.png" class="paris-delete-icon" data-id="' . $event["id"] . '"/></th>';
 										$string .= '</tr>';
 
