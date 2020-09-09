@@ -14,7 +14,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
   <div class="container">
     <a class="navbar-brand" href="#">
-          <img src="http://fr.bar-sports.com/forum-sport/uploads/set_resources_2/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png" width="60px" alt="">
+          <img src="/assets/image.png" width="60px" alt="">
         </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

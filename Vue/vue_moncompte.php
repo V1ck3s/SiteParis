@@ -61,7 +61,7 @@ table{
 								<h2>Mes paris en cours :</h2>
 							</br>
 </br>
-								<table class="table-striped table-dark" cellpadding="15" width="100%"><tr height="70"><th>Parié sur</th><th>Pour le match du</th><th>Mise</th><th>Gain</th><th>Gagné/Perdu</th></tr>
+								<table class="table-striped table-dark col-sm-12 col-xl-6" cellpadding="15"><tr height="70"><th>Parié sur</th><th>Pour le match du</th><th>Mise</th><th>Gain</th><th>Gagné/Perdu</th></tr>
 								<?php
 
 									while($unCompte=$lesComptes->fetch(PDO::FETCH_OBJ))
