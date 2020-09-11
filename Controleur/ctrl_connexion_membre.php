@@ -1,26 +1,35 @@
 <?php
-    session_start();
-	require ("../Modele/modele_connexion_membre.php");
-			
-	$cm= new ConnexionMembre();
-			
-	if(isset($_GET['mem']))
+	require ("../Modele/modele_joueur.php");
+
+	if(isset($_POST['loginForm']))
 	{
-		$existe=$cm->existe();
-		
-		$login= $_POST['conn_login'];//identifiant de connexion
-		if($existe==1)
+		$j = new Player($_POST["conn_login"]);
+		if($j->id != -1) // Si l'utilisateur existe
 		{
-			$uneLigne=$cm->connection();
+			if($j->connect($_POST["conn_pass"]))
+			{
+				session_start();
+				$_SESSION['userLog'] = 1;
+				$_SESSION['login'] = $j->getLogin();
+				$_SESSION['idUtil'] = $j->id;
+				header('Location: ../index.php');
+			}
+			else
+			{
+				echo '
+				<div class="alert alert-danger" role="alert">
+					Login ou mot de passe incorrect.
+				</div>';
+				include("../index.php");
+			}
 		}
-		else //si la requete ne renvoie pas de ligne
+		else
 		{
-			//si erreur=true(mot de passe ou login incorrect alors on affiche un message d'erreur)
-			echo"<script> alert ('Login ou Mot De Passe Incorrect !');</script>";
-			// et redirection vers la page de connexion
-			print ("<script language = \"JavaScript\">");
-			print ("location.href = '../index.php';");
-			print ("</script>");
+			echo '
+			<div class="alert alert-danger" role="alert">
+				Login ou mot de passe incorrect.
+			</div>';
+			include("../index.php");
 		}
 	}
 	else

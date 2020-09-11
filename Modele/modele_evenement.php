@@ -24,18 +24,21 @@
 				$req = $this->cx->prepare("SELECT * FROM event WHERE id = :id");
 				$req->execute(array(":id" => $id));
 				$result = $req->fetch();
-				if(count($result) > 0)
+				if($result)
 				{
-					$this->id = $result["id"];
-					$this->premiereOption = $result["premiereOption"];
-					$this->deuxiemeOption = $result["deuxiemeOption"];
-					$this->troisiemeOption = $result["troisiemeOption"];
-					$this->cotePremiere = $result["cotePremiere"];
-					$this->coteDeuxieme = $result["coteDeuxieme"];
-					$this->coteTroisieme = $result["coteTroisieme"];
-					$this->heureDebut = $result["heureDebut"];
-					$this->heureFin = $result["heureFin"];
-					$this->optionGagnant = $result["optionGagnant"];
+					if(count($result) > 0)
+					{
+						$this->id = $result["id"];
+						$this->premiereOption = $result["premiereOption"];
+						$this->deuxiemeOption = $result["deuxiemeOption"];
+						$this->troisiemeOption = $result["troisiemeOption"];
+						$this->cotePremiere = $result["cotePremiere"];
+						$this->coteDeuxieme = $result["coteDeuxieme"];
+						$this->coteTroisieme = $result["coteTroisieme"];
+						$this->heureDebut = $result["heureDebut"];
+						$this->heureFin = $result["heureFin"];
+						$this->optionGagnant = $result["optionGagnant"];
+					}
 				}
 			}
 		}

@@ -27,7 +27,7 @@
 					
 					
 					<?php
-						if(isset($_SESSION['login']))
+						if(isset($_SESSION['login']) && $_SESSION['login'] != "")
 						{
 							
 							header('Location:Controleur/ctrl_accueil_paris.php');
