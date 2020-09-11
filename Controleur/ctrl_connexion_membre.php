@@ -34,6 +34,14 @@
 	}
 	else
 	{
+		if(isset($_GET['signup']))
+		{
+			if($_GET['signup'])
+				echo '
+				<div class="success alert-success" role="alert">
+					Inscription réussie.
+				</div>';
+		}
 		include("../index.php");
 	}
 ?>

@@ -145,7 +145,7 @@ body {
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="loginForm">Se connecter</button>
 
               <hr class="my-4">
-              <button onclick="location.href = 'Controleur/ctrl_inscription_membre.php';" class="btn btn-lg btn-danger btn-block text-uppercase" id="inscription">S'inscrire</button>
+              <button onclick="location.href = '/Controleur/ctrl_inscription_membre.php';" class="btn btn-lg btn-danger btn-block text-uppercase" id="inscription">S'inscrire</button>
               
               
             </form>

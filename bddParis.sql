@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 09 sep. 2020 à 19:18
+-- Généré le :  ven. 11 sep. 2020 à 13:09
 -- Version du serveur :  10.1.31-MariaDB
 -- Version de PHP :  7.2.4
 
@@ -89,7 +89,7 @@ CREATE TABLE `paris` (
 
 CREATE TABLE `utilisateur` (
   `id` int(11) NOT NULL,
-  `login` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `login` varchar(50) NOT NULL,
   `mdp` varchar(200) NOT NULL,
   `argent` float NOT NULL,
   `isAdmin` bit(1) NOT NULL DEFAULT b'0'

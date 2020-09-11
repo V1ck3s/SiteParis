@@ -136,12 +136,7 @@ body {
                 <input type="password" name="conn_pass" id="conn_pass" class="form-control" placeholder="Password" required>
                 <label for="conn_pass">Mot de passe</label>
               </div>
-
-              <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Retenir mot de passe</label>
-                
-              </div>
+              
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="envoyer">S'inscrire</button>
               <hr class="my-4">
               <button onclick="location.href = '../index.php';" class="btn btn-lg btn-danger btn-block text-uppercase" id="connexion">Se connecter</button>
