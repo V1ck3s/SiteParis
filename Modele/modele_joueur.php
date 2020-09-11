@@ -5,6 +5,7 @@
 		public $id = -1;
 		private $login = "";
 		private $money = -1;
+		private $password = "";
 		private $isAdmin = 0;
 		
 		public function __construct($identifier){
@@ -63,13 +64,15 @@
 			}
 			else
 			{
-				$query = "INSERT INTO utilisateur (login, argent) VALUES (:login1, :argent);";
+				$query = "INSERT INTO utilisateur (login, argent, mdp) VALUES (:login1, :argent, :pass);";
 				$req = $this->cx->prepare($query);
 				$req->execute(array(
 					":login1" => $this->login,
-					":argent" => $this->money
+					":argent" => $this->money,
+					":pass" => $this->password
 				));
 			}
+			return $req->rowCount() > 0;
 		}
 
 		public function getLogin()
@@ -77,9 +80,19 @@
 			return $this->login;
 		}
 
+		public function setLogin($login)
+		{
+			$this->login = $login;
+		}
+
 		public function getMoney()
 		{
 			return $this->money;
+		}
+
+		public function setMoney($amount)
+		{
+			$this->money = $amount;
 		}
 
 		public function giveMoney($amount)
@@ -94,6 +107,11 @@
 
 			$this->money -= $amount;
 			return true;
+		}
+
+		public function setPassword($password)
+		{
+			$this->password = $password;
 		}
 
 		public function isAdmin()

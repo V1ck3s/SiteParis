@@ -1,27 +1,30 @@
 <?php
     
-	require ("../Modele/modele_inscription_membre.php");
-			
-	$cm= new InscriptionMembre();
+	require ("../Modele/modele_joueur.php");
+	
 	include("../utils/header.php");
 	if(isset($_GET['mem']))
 	{
-		$existe=$cm->inscription();
-		
-		$login= $_POST['conn_login'];//identifiant de connexion
-		/*if($existe==1)
+		$login = $_POST['conn_login'];
+		$pass = password_hash($_POST['conn_pass'], PASSWORD_DEFAULT);
+
+		$j = new Player($login);
+		if($j->id == -1) // Le joueur n'existe pas
 		{
-			$uneLigne=$cm->connection();
+			$j->setLogin($login);
+			$j->setMoney(1000);
+			$j->setPassword($pass);
+			if($j->save()) header('Location: /Controleur/ctrl_connexion_membre.php?signup=true');
 		}
-		else //si la requete ne renvoie pas de ligne
+		else
 		{
-			//si erreur=true(mot de passe ou login incorrect alors on affiche un message d'erreur)
-			echo"<script> alert ('Login ou Mot De Passe Incorrect !');</script>";
-			// et redirection vers la page de connexion
-			print ("<script language = \"JavaScript\">");
-			print ("location.href = '../index.php';");
-			print ("</script>");
-		}*/
+			echo '
+			<div class="alert alert-danger" role="alert">
+				Ce login est déjà utilisé !
+			</div>';
+			include("../Vue/vue_inscription_membre.php");
+			include('../newStyle.css.php');
+		}
 	}
 	else
 	{
