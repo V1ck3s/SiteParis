@@ -122,7 +122,7 @@
 
 			$req = "SELECT *
 					FROM event
-					WHERE heureDebut >= NOW()
+					WHERE heureDebut >= DATE_ADD(now(),interval 2 hour);
 					ORDER BY heureDebut ASC";
 			$curseur=$cx->query($req);
 			return $curseur;

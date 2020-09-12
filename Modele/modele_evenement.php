@@ -116,7 +116,7 @@
 			$cx = Connexion::getInstance();
 			$req = "SELECT *
 					FROM event 
-					WHERE heureDebut > NOW()
+					WHERE heureDebut > DATE_ADD(now(),interval 2 hour);
 					ORDER BY heureDebut DESC";
 			$curseur = $cx->query($req);
 			return $curseur->fetchAll();
