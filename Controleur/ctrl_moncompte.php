@@ -1,5 +1,5 @@
 <?php
-	
+	date_default_timezone_set('Europe/Paris');
 	require("../Modele/modele_joueur.php");
 	require("../Modele/modele_paris.php");
 

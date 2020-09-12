@@ -1,4 +1,5 @@
 <?php
+	date_default_timezone_set('Europe/Paris');
 	require ("../Modele/modele_joueur.php");
 
 	if(isset($_POST['loginForm']))

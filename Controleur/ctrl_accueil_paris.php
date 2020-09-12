@@ -1,5 +1,5 @@
 <?php
-	
+	date_default_timezone_set('Europe/Paris');
 	require("../Modele/modele_news.php");
 		
 	$r= new News();
