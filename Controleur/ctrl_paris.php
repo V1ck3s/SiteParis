@@ -31,9 +31,8 @@
 			}
 			elseif(isset($_POST['input_eventStartDate'])) // Un admin à créé un événement
 			{
-				$startDate = new DateTime($_POST["input_eventStartDate"]);
-				$endDate = new DateTime($_POST["input_eventEndDate"]);
-
+				$startDate = DateTime::createFromFormat('d/m/y',$_POST["input_eventStartDate"]);
+				$endDate = DateTime::createFromFormat('d/m/y',$_POST["input_eventEndDate"]);
 				$evt = new Event();
 				$evt->premiereOption = $_POST["input_team1"];
 				$evt->deuxiemeOption = "NUL";
