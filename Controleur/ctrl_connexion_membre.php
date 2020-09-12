@@ -12,7 +12,7 @@
 				$_SESSION['userLog'] = 1;
 				$_SESSION['login'] = $j->getLogin();
 				$_SESSION['idUtil'] = $j->id;
-				header('Location: ../index.php');
+				header('Location:/Controleur/ctrl_accueil_paris.php');
 			}
 			else
 			{
