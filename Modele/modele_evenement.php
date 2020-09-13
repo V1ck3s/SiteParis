@@ -126,7 +126,7 @@
                 {
                     $req = "SELECT *
                             FROM event 
-                            WHERE 1
+                            WHERE optionGagnant = ''
                             ORDER BY heureDebut DESC";
                 }
                 $curseur = $cx->query($req);
