@@ -86,7 +86,7 @@
 			$query = "SELECT loginJoueur, optionChoisis, gainRecupere FROM paris WHERE idEvent = :id";
 			$reqSelect = $this->cx->prepare($query);
 
-			$query = "UPDATE paris SET argentRecup = 1 WHERE idEvent = :id AND optionChoisis = :winner";
+			$query = "UPDATE paris SET argentRecup = 1 WHERE loginJoueur = :joueur AND idEvent = :id AND optionChoisis = :winner";
 			$reqUpdateParis = $this->cx->prepare($query);
 
 			$reqSelect->execute(array(
@@ -96,6 +96,7 @@
 			while($row = $reqSelect->fetch())
 			{
 				$reqUpdateParis->execute(array(
+					":joueur" => $row["loginJoueur"],
 					":id" => $this->id,
 					":winner" => $this->optionGagnant
 				));
