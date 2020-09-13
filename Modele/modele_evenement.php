@@ -112,14 +112,27 @@
 		
 		//Retourne un tableau contenant tous les paris jouables
 		public static function getAllNext() {
-			require_once("../Modele/modele_connexion_base.php");
-			$cx = Connexion::getInstance();
-			$req = "SELECT *
-					FROM event 
-					WHERE heureDebut > DATE_ADD(now(),interval 2 hour);
-					ORDER BY heureDebut DESC";
-			$curseur = $cx->query($req);
-			return $curseur->fetchAll();
-		}
+            require_once("../Modele/modele_connexion_base.php");
+            $cx = Connexion::getInstance();
+            $j = new Player($_SESSION['idUtil']);
+            if($j->id != -1)
+            {
+                $req = "SELECT *
+                        FROM event 
+                        WHERE heureDebut > DATE_ADD(now(),interval 2 hour);
+                        ORDER BY heureDebut DESC";
+                        
+                if($j->isAdmin())
+                {
+                    $req = "SELECT *
+                            FROM event 
+                            WHERE 1
+                            ORDER BY heureDebut DESC";
+                }
+                $curseur = $cx->query($req);
+                return $curseur->fetchAll();
+            }
+            else return [];
+        }
 	}
 ?>
