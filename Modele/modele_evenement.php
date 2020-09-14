@@ -83,14 +83,15 @@
 				":id" => $this->id
 			));
 
-			$query = "SELECT loginJoueur, optionChoisis, gainRecupere FROM paris WHERE idEvent = :id";
+			$query = "SELECT loginJoueur, optionChoisis, gainRecupere FROM paris WHERE idEvent = :id AND optionChoisis = :winner";
 			$reqSelect = $this->cx->prepare($query);
 
 			$query = "UPDATE paris SET argentRecup = 1 WHERE loginJoueur = :joueur AND idEvent = :id AND optionChoisis = :winner";
 			$reqUpdateParis = $this->cx->prepare($query);
 
 			$reqSelect->execute(array(
-				":id" => $this->id
+				":id" => $this->id,
+				":winner" => this->optionGagnant
 			));
 
 			while($row = $reqSelect->fetch())
