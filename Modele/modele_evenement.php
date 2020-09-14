@@ -91,7 +91,7 @@
 
 			$reqSelect->execute(array(
 				":id" => $this->id,
-				":winner" => this->optionGagnant
+				":winner" => $this->optionGagnant
 			));
 
 			while($row = $reqSelect->fetch())
